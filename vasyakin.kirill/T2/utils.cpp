@@ -206,7 +206,7 @@ std::ostream& vasyakin::operator<<(std::ostream& out, const DataStruct& dest)
 
   GuardIO guard(out);
   out << "(:key1 '" << dest.key1 << "':";
-  out << "key2 (:N " << dest.key2.first << ":D" << dest.key2.second << ":):";
+  out << "key2 (:N " << dest.key2.first << ":D " << dest.key2.second << ":):";
   out << "key3 \"" << dest.key3 << "\":)";
 
   return out;
