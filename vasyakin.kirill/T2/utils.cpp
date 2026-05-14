@@ -86,3 +86,26 @@ std::istream& vasyakin::operator>>(std::istream& in, RatioIO&& dest)
 
   return in;
 }
+
+std::istream& vasyakin::operator>>(std::istream& in, StringIO&& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+
+  return std::getline(in >> DelimeterIO{'"'}, dest.ref, '"');
+}
+
+
+std::istream& vasyakin::operator>>(std::istream& in, LabelIO&& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+
+  return in >> dest.ref;
+}
