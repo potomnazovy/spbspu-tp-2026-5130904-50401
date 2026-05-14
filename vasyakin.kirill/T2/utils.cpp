@@ -33,7 +33,7 @@ std::istream& vasyakin::operator>>(std::istream& in, CharIO&& dest)
     in.setstate(std::ios_base::failbit);
     return in;
   }
-  
+
   in >> dest.ref;
   if (!in)
   {
@@ -49,7 +49,6 @@ std::istream& vasyakin::operator>>(std::istream& in, CharIO&& dest)
 
   return in;
 }
-
 
 std::istream& vasyakin::operator>>(std::istream& in, RatioIO&& dest)
 {
@@ -98,7 +97,6 @@ std::istream& vasyakin::operator>>(std::istream& in, StringIO&& dest)
   return std::getline(in >> DelimeterIO{'"'}, dest.ref, '"');
 }
 
-
 std::istream& vasyakin::operator>>(std::istream& in, LabelIO&& dest)
 {
   std::istream::sentry sentry(in);
@@ -135,7 +133,7 @@ std::istream& vasyakin::operator>>(std::istream& in, DataStruct& dest)
     {
       break;
     }
-    
+
     if (label == "key1")
     {
       in >> CharIO{input.key1};
@@ -207,7 +205,7 @@ bool vasyakin::operator<(const DataStruct& lhs, const DataStruct& rhs)
 
   long double l_val = static_cast< long double >(lhs.key2.first) / lhs.key2.second;
   long double r_val = static_cast< long double >(rhs.key2.first) / rhs.key2.second;
-  
+
   if (l_val != r_val)
   {
     return l_val < r_val;
