@@ -197,3 +197,21 @@ std::ostream& vasyakin::operator<<(std::ostream& out, const DataStruct& dest)
 
   return out;
 }
+
+bool vasyakin::operator<(const DataStruct& lhs, const DataStruct& rhs)
+{
+  if (lhs.key1 != rhs.key1)
+  {
+    return lhs.key1 < rhs.key1;
+  }
+
+  long double l_val = static_cast< long double >(lhs.key2.first) / lhs.key2.second;
+  long double r_val = static_cast< long double >(rhs.key2.first) / rhs.key2.second;
+  
+  if (l_val != r_val)
+  {
+    return l_val < r_val;
+  }
+
+  return lhs.key3.length() < rhs.key3.length();
+}
