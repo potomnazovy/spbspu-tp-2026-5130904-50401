@@ -109,3 +109,91 @@ std::istream& vasyakin::operator>>(std::istream& in, LabelIO&& dest)
 
   return in >> dest.ref;
 }
+
+std::istream& vasyakin::operator>>(std::istream& in, DataStruct& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+
+  DataStruct input{};
+  bool got_k1 = false, got_k2 = false, got_k3 = false;
+  std::string label;
+
+  in >> DelimeterIO{'('} >> DelimeterIO{':'};
+  if (!in)
+  {
+    return in;
+  }
+
+  while (in && in.peek() != ')')
+  {
+    in >> LabelIO{label};
+    if (!in)
+    {
+      break;
+    }
+    
+    if (label == "key1")
+    {
+      in >> CharIO{input.key1};
+      if (in)
+      {
+        got_k1 = true;
+      }
+    }
+    else if (label == "key2")
+    {
+      in >> RatioIO{input.key2};
+      if (in)
+      {
+        got_k2 = true;
+      }
+    }
+    else if (label == "key3")
+    {
+      in >> StringIO{input.key3};
+      if (in)
+      {
+        got_k3 = true;
+      }
+    }
+    else
+    {
+      break;
+    }
+
+    in >> DelimeterIO{':'};
+  }
+
+  in >> DelimeterIO{')'};
+
+  if (in && got_k1 && got_k2 && got_k3)
+  {
+    dest = input;
+  }
+  else
+  {
+    in.setstate(std::ios_base::failbit);
+  }
+
+  return in;
+}
+
+std::ostream& vasyakin::operator<<(std::ostream& out, const DataStruct& dest)
+{
+  std::ostream::sentry sentry(out);
+  if (!sentry)
+  {
+    return out;
+  }
+
+  GuardIO guard(out);
+  out << "(:key1 '" << dest.key1 << "':";
+  out << "key2 (:N " << dest.key2.first << ":D" << dest.key2.second << ":):";
+  out << "key3 \"" << dest.key3 << "\":)";
+
+  return out;
+}
