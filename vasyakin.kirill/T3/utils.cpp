@@ -87,3 +87,45 @@ bool vertices_less(const vasyakin::Polygon& lhs, const vasyakin::Polygon& rhs)
 {
   return lhs.points.size() < rhs.points.size();
 }
+
+bool operator==(const vasyakin::Point& a, const vasyakin::Point& b)
+{
+  return a.x == b.x && a.y == b.y;
+}
+
+bool is_permutation_of(const vasyakin::Polygon& candidate, const vasyakin::Polygon& reference)
+{
+  if (candidate.points.size() != reference.points.size())
+  {
+    return false;
+  }
+
+  return std::is_permutation(candidate.points.begin(), candidate.points.end(), reference.points.begin());
+}
+
+bool is_rect(const vasyakin::Polygon& candidate)
+{
+  if (candidate.points.size() != 4)
+  {
+    return false;
+  }
+
+  const auto& pts = candidate.points;
+
+  long long x01 = pts[1].x - pts[0].x;
+  long long y01 = pts[1].y - pts[0].y;
+
+  long long x12 = pts[2].x - pts[1].x;
+  long long y12 = pts[2].y - pts[1].y;
+
+  long long x23 = pts[3].x - pts[2].x;
+  long long y23 = pts[3].y - pts[2].y;
+
+  long long x30 = pts[0].x - pts[3].x;
+  long long y30 = pts[0].y - pts[3].y;
+
+  return (x01 * x12 + y01 * y12 == 0) &&
+    (x12 * x23 + y12 * y23 == 0) &&
+    (x23 * x30 + y23 * y30 == 0) &&
+    (x30 * x01 + y30 * y01 == 0);
+}
