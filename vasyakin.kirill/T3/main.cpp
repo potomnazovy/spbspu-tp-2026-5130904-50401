@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <fstream>
+#include <limits>
 #include "commands.hpp"
 
 int main(int argc, char* argv[])
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
     catch (...)
     {
       std::cout << "<INVALID COMMAND>\n";
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 
