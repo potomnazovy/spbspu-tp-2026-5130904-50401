@@ -51,7 +51,7 @@ double vasyakin::getArea(const Polygon& poly)
   return std::accumulate(areas.begin(), areas.end(), 0.0);
 }
 
-bool has_even_vertices(const vasyakin::Polygon& p)
+bool vasyakin::has_even_vertices(const vasyakin::Polygon& p)
 {
   if (p.points.size() % 2 == 0)
   {
@@ -60,7 +60,7 @@ bool has_even_vertices(const vasyakin::Polygon& p)
   return false;
 }
 
-bool has_odd_vertices(const vasyakin::Polygon& p)
+bool vasyakin::has_odd_vertices(const vasyakin::Polygon& p)
 {
   if (p.points.size() % 2 != 0)
   {
@@ -69,7 +69,7 @@ bool has_odd_vertices(const vasyakin::Polygon& p)
   return false;
 }
 
-bool has_n_vertices(const vasyakin::Polygon& p, size_t n)
+bool vasyakin::has_n_vertices(const vasyakin::Polygon& p, size_t n)
 {
   if (p.points.size() == n)
   {
@@ -78,22 +78,22 @@ bool has_n_vertices(const vasyakin::Polygon& p, size_t n)
   return false;
 }
 
-bool area_less(const vasyakin::Polygon& lhs, const vasyakin::Polygon& rhs)
+bool vasyakin::area_less(const vasyakin::Polygon& lhs, const vasyakin::Polygon& rhs)
 {
   return vasyakin::getArea(lhs) < vasyakin::getArea(rhs);
 }
 
-bool vertices_less(const vasyakin::Polygon& lhs, const vasyakin::Polygon& rhs)
+bool vasyakin::vertices_less(const vasyakin::Polygon& lhs, const vasyakin::Polygon& rhs)
 {
   return lhs.points.size() < rhs.points.size();
 }
 
-bool operator==(const vasyakin::Point& a, const vasyakin::Point& b)
+bool vasyakin::operator==(const vasyakin::Point& a, const vasyakin::Point& b)
 {
   return a.x == b.x && a.y == b.y;
 }
 
-bool is_permutation_of(const vasyakin::Polygon& candidate, const vasyakin::Polygon& reference)
+bool vasyakin::is_permutation_of(const vasyakin::Polygon& candidate, const vasyakin::Polygon& reference)
 {
   if (candidate.points.size() != reference.points.size())
   {
@@ -103,7 +103,7 @@ bool is_permutation_of(const vasyakin::Polygon& candidate, const vasyakin::Polyg
   return std::is_permutation(candidate.points.begin(), candidate.points.end(), reference.points.begin());
 }
 
-bool is_rect(const vasyakin::Polygon& candidate)
+bool vasyakin::is_rect(const vasyakin::Polygon& candidate)
 {
   if (candidate.points.size() != 4)
   {

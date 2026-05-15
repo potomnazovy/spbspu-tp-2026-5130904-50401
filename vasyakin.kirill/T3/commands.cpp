@@ -50,7 +50,7 @@ void vasyakin::area(std::istream& in, std::ostream& out, std::vector< Polygon >&
   out << std::fixed << std::setprecision(1) << total << '\n';
 }
 
-void count(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+void vasyakin::count(std::istream& in, std::ostream& out, std::vector< Polygon >& poly)
 {
   std::string str;
   if (!(in >> str))
@@ -78,7 +78,7 @@ void count(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >
   out << result << '\n';
 }
 
-void max(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+void vasyakin::max(std::istream& in, std::ostream& out, std::vector< Polygon >& poly)
 {
   std::string str;
   if (!(in >> str))
@@ -105,7 +105,7 @@ void max(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& 
   throw std::invalid_argument("No command available");
 }
 
-void min(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+void vasyakin::min(std::istream& in, std::ostream& out, std::vector< Polygon >& poly)
 {
   std::string str;
   if (!(in >> str))
@@ -132,13 +132,13 @@ void min(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& 
   throw std::invalid_argument("No command available");
 }
 
-void rects(std::istream&, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+void vasyakin::rects(std::istream&, std::ostream& out, std::vector< Polygon >& poly)
 {
   auto result = std::count_if(poly.begin(), poly.end(), vasyakin::is_rect);
   out << result << '\n';
 }
 
-void perms(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+void vasyakin::perms(std::istream& in, std::ostream& out, std::vector< Polygon >& poly)
 {
   vasyakin::Polygon ref;
   if (!(in >> ref))
