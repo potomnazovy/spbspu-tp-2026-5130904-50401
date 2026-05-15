@@ -131,3 +131,22 @@ void min(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& 
 
   throw std::invalid_argument("No command available");
 }
+
+void rects(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+{
+  auto result = std::count_if(poly.begin(), poly.end(), vasyakin::is_rect);
+  out << result << '\n';
+}
+
+void perms(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+{
+  vasyakin::Polygon ref;
+  if (!(in >> ref))
+  {
+    throw std::invalid_argument("Invalid polygon format");
+  }
+
+  auto pred = std::bind(vasyakin::is_permutation_of, std::placeholders::_1, std::cref(ref));
+  auto result = std::count_if(poly.begin(), poly.end(), pred);
+  out << result << '\n';
+}
