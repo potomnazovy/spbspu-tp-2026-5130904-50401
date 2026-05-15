@@ -129,3 +129,60 @@ bool is_rect(const vasyakin::Polygon& candidate)
     (x23 * x30 + y23 * y30 == 0) &&
     (x30 * x01 + y30 * y01 == 0);
 }
+
+std::istream& vasyakin::operator>>(std::istream& in, DelimeterIO&& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+
+  char c = '\0';
+  in >> c;
+  if (in && dest.exp != c)
+  {
+    in.setstate(std::ios_base::failbit);
+  }
+
+  return in;
+}
+
+std::istream& vasyakin::operator>>(std::istream& in, Point& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+
+  in >> DelimeterIO{'('} >> dest.x >> DelimeterIO{';'} >> dest.y >> DelimeterIO{')'};
+  return in;
+}
+
+std::istream& vasyakin::operator>>(std::istream& in, Polygon& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+
+  int n = 0;
+  in >> n;
+  if (!in || n <= 0)
+  {
+    in.setstate(std::ios_base::failbit);
+    return in;
+  }
+
+  dest.points.clear();
+  using iit_t = std::istream_iterator< Point >;
+  std::copy_n(iit_t{in}, n, std::back_inserter(dest.points));
+
+  if (!in)
+  {
+    in.setstate(std::ios_base::failbit);
+  }
+  return in;
+}
