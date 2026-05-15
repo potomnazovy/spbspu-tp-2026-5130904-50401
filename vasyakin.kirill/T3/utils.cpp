@@ -50,3 +50,40 @@ double vasyakin::getArea(const Polygon& poly)
 
   return std::accumulate(areas.begin(), areas.end(), 0.0);
 }
+
+bool has_even_vertices(const vasyakin::Polygon& p)
+{
+  if (p.points.size() % 2 == 0)
+  {
+    return true;
+  }
+  return false;
+}
+
+bool has_odd_vertices(const vasyakin::Polygon& p)
+{
+  if (p.points.size() % 2 != 0)
+  {
+    return true;
+  }
+  return false;
+}
+
+bool has_n_vertices(const vasyakin::Polygon& p, size_t n)
+{
+  if (p.points.size() == n)
+  {
+    return true;
+  }
+  return false;
+}
+
+bool area_less(const vasyakin::Polygon& lhs, const vasyakin::Polygon& rhs)
+{
+  return vasyakin::getArea(lhs) < vasyakin::getArea(rhs);
+}
+
+bool vertices_less(const vasyakin::Polygon& lhs, const vasyakin::Polygon& rhs)
+{
+  return lhs.points.size() < rhs.points.size();
+}
