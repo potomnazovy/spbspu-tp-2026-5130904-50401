@@ -77,3 +77,57 @@ void count(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >
 
   out << result << '\n';
 }
+
+void max(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+{
+  std::string str;
+  if (!(in >> str))
+  {
+    throw std::runtime_error("Missing str");
+  }
+
+  if (poly.empty())
+  {
+    throw std::runtime_error("No polygons for MAX");
+  }
+
+  if (str == "AREA")
+  {
+    auto it = std::max_element(poly.begin(), poly.end(), vasyakin::area_less);
+    out << std::fixed << std::setprecision(1) << getArea(*it) << '\n';
+  }
+  else if (str == "VERTEXES")
+  {
+    auto it = std::max_element(poly.begin(), poly.end(), vasyakin::vertices_less);
+    out << it->points.size() << '\n';
+  }
+
+  throw std::invalid_argument("No command available");
+}
+
+void min(std::istream& in, std::ostream& out, std::vector< vasyakin::Polygon >& poly)
+{
+  std::string str;
+  if (!(in >> str))
+  {
+    throw std::runtime_error("Missing str");
+  }
+
+  if (poly.empty())
+  {
+    throw std::runtime_error("No polygons for MIN");
+  }
+
+  if (str == "AREA")
+  {
+    auto it = std::min_element(poly.begin(), poly.end(), vasyakin::area_less);
+    out << std::fixed << std::setprecision(1) << getArea(*it) << '\n';
+  }
+  else if (str == "VERTEXES")
+  {
+    auto it = std::min_element(poly.begin(), poly.end(), vasyakin::vertices_less);
+    out << it->points.size() << '\n';
+  }
+
+  throw std::invalid_argument("No command available");
+}
