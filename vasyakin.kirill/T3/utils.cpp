@@ -170,7 +170,7 @@ std::istream& vasyakin::operator>>(std::istream& in, Polygon& dest)
 
   int n = 0;
   in >> n;
-  if (!in || n <= 0)
+  if (!in || n < 3)
   {
     in.setstate(std::ios_base::failbit);
     return in;

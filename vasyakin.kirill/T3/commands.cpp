@@ -24,6 +24,7 @@ void vasyakin::area(std::istream& in, std::ostream& out, std::vector< Polygon >&
     double total = std::accumulate(areas.begin(), areas.end(), 0.0);
 
     out << std::fixed << std::setprecision(1) << total / poly.size() << '\n';
+    return;
   }
   else
   {
@@ -38,6 +39,11 @@ void vasyakin::area(std::istream& in, std::ostream& out, std::vector< Polygon >&
     else
     {
       size_t n = std::stoul(str);
+      if (n < 3)
+      {
+        throw std::runtime_error("Invalid vertex count");
+      }
+
       auto pred = std::bind(has_n_vertices, std::placeholders::_1, n);
       std::copy_if(poly.begin(), poly.end(), std::back_inserter(yapoly), pred);
     }
