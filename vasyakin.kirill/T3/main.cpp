@@ -1,8 +1,8 @@
 #include <iostream>
-#include <unordered_map>
 #include <fstream>
 #include <limits>
 #include "commands.hpp"
+#include "cli.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -19,45 +19,15 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  std::vector< vasyakin::Polygon > poly;
-  vasyakin::Polygon temp;
+  std::vector< vasyakin::Polygon > all_polygons;
+  vasyakin::readData(file, all_polygons);
 
-  while (file >> temp)
-  {
-    poly.push_back(temp);
+  vasyakin::command::all_polygons = &all_polygons;
 
-    if (!file.eof() && file.fail())
-    {
-      file.clear();
-      file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
-  }
-  file.close();
-
-  using cmd_t = void(*)(std::istream&, std::ostream&, std::vector< vasyakin::Polygon >&);
-  std::unordered_map< std::string, cmd_t > cmds;
-
-  cmds["AREA"] = vasyakin::area;
-  cmds["COUNT"] = vasyakin::count;
-  cmds["MAX"] = vasyakin::max;
-  cmds["MIN"] = vasyakin::min;
-  cmds["RECTS"] = vasyakin::rects;
-  cmds["PERMS"] = vasyakin::perms;
-
-  std::string cmd;
-  while (std::cin >> cmd)
-  {
-    try
-    {
-      cmds.at(cmd)(std::cin, std::cout, poly);
-    }
-    catch (...)
-    {
-      std::cout << "<INVALID COMMAND>" << '\n';
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
-  }
+  std::vector< vasyakin::command > v;
+  std::copy(std::istream_iterator< vasyakin::command >{std::cin},
+    std::istream_iterator< vasyakin::command >{},
+    std::back_inserter(v));
 
   return 0;
 }
