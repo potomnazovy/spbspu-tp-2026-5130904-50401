@@ -9,7 +9,7 @@ void readData(std::istream& in, std::vector< vasyakin::Polygon >& all_polygons)
   {
     return;
   }
-  
+
   vasyakin::Polygon p;
   if (in >> p)
   {
@@ -17,7 +17,7 @@ void readData(std::istream& in, std::vector< vasyakin::Polygon >& all_polygons)
     vasyakin::readData(in, all_polygons);
     return;
   }
-  
+
   if (in.eof())
   {
     return;

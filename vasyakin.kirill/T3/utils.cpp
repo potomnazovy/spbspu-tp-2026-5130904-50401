@@ -137,14 +137,14 @@ void readPointsRecursive(std::istream& in,
   {
     return;
   }
-  
+
   vasyakin::Point point;
   if (!(in >> point))
   {
     in.setstate(std::ios_base::failbit);
     return;
   }
-  
+
   points.push_back(point);
   vasyakin::readPointsRecursive(in, points, remaining - 1);
 }
@@ -192,7 +192,7 @@ std::istream& operator>>(std::istream& in, vasyakin::Polygon& p)
 
   size_t count_points = 0;
   in >> count_points;
-  
+
   if (!in || count_points < 3)
   {
     in.setstate(std::ios_base::failbit);
