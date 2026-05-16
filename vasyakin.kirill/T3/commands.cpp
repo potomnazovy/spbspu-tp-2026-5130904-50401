@@ -101,8 +101,10 @@ void vasyakin::max(std::istream& in, std::ostream& out, std::vector< Polygon >& 
     auto it = std::max_element(poly.begin(), poly.end(), vasyakin::vertices_less);
     out << it->points.size() << '\n';
   }
-
-  throw std::invalid_argument("No command available");
+  else
+  {
+    throw std::invalid_argument("No command available");
+  }
 }
 
 void vasyakin::min(std::istream& in, std::ostream& out, std::vector< Polygon >& poly)
@@ -128,8 +130,10 @@ void vasyakin::min(std::istream& in, std::ostream& out, std::vector< Polygon >& 
     auto it = std::min_element(poly.begin(), poly.end(), vasyakin::vertices_less);
     out << it->points.size() << '\n';
   }
-
-  throw std::invalid_argument("No command available");
+  else
+  {
+    throw std::invalid_argument("No command available");
+  }
 }
 
 void vasyakin::rects(std::istream&, std::ostream& out, std::vector< Polygon >& poly)
