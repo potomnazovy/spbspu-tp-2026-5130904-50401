@@ -77,6 +77,11 @@ void vasyakin::count(std::istream& in, std::ostream& out, std::vector< Polygon >
   else
   {
     auto n = std::stoul(str);
+    if (n < 3)
+    {
+      throw std::runtime_error("Invalid vertex count");
+    }
+
     auto pred = std::bind(vasyakin::has_n_vertices, std::placeholders::_1, n);
     result = std::count_if(poly.begin(), poly.end(), pred);
   }
