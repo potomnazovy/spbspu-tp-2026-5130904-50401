@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 {
   if (argc != 2)
   {
-    std::cerr << "Too much" << '\n';
+    std::cerr << "Too much or no file" << '\n';
     return 1;
   }
 
@@ -22,13 +22,11 @@ int main(int argc, char* argv[])
   std::vector< vasyakin::Polygon > poly;
   vasyakin::Polygon temp;
 
-  while (file)
+  while (file >> temp)
   {
-    if (file >> temp)
-    {
-      poly.push_back(temp);
-    }
-    else
+    poly.push_back(temp);
+
+    if (!file.eof() && file.fail())
     {
       file.clear();
       file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
@@ -55,7 +53,8 @@ int main(int argc, char* argv[])
     }
     catch (...)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      std::cout << "<INVALID COMMAND>" << '\n';
+      std::cin.clear(); 
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
