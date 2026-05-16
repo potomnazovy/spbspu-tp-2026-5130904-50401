@@ -130,6 +130,25 @@ bool vasyakin::is_rect(const vasyakin::Polygon& candidate)
     (x30 * x01 + y30 * y01 == 0);
 }
 
+void readPointsRecursive(std::istream& in,
+  std::vector< vasyakin::Point >& points, size_t remaining)
+{
+  if (remaining == 0)
+  {
+    return;
+  }
+  
+  vasyakin::Point point;
+  if (!(in >> point))
+  {
+    in.setstate(std::ios_base::failbit);
+    return;
+  }
+  
+  points.push_back(point);
+  vasyakin::readPointsRecursive(in, points, remaining - 1);
+}
+
 std::istream& vasyakin::operator>>(std::istream& in, DelimeterIO&& dest)
 {
   std::istream::sentry sentry(in);
@@ -160,7 +179,7 @@ std::istream& vasyakin::operator>>(std::istream& in, Point& dest)
   return in;
 }
 
-std::istream& vasyakin::operator>>(std::istream& in, Polygon& dest)
+std::istream& operator>>(std::istream& in, vasyakin::Polygon& p)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
@@ -168,21 +187,28 @@ std::istream& vasyakin::operator>>(std::istream& in, Polygon& dest)
     return in;
   }
 
-  int n = 0;
-  in >> n;
-  if (!in || n < 3)
+  vasyakin::GuardIO guard(in);
+  vasyakin::Polygon poly;
+
+  size_t count_points = 0;
+  in >> count_points;
+  
+  if (!in || count_points < 3)
   {
     in.setstate(std::ios_base::failbit);
     return in;
   }
 
-  dest.points.clear();
-  using iit_t = std::istream_iterator< Point >;
-  std::copy_n(iit_t{in}, n, std::back_inserter(dest.points));
+  poly.points.reserve(count_points);
 
-  if (!in)
+  vasyakin::readPointsRecursive(in, poly.points, count_points);
+
+  if (!in || poly.points.size() != count_points)
   {
     in.setstate(std::ios_base::failbit);
+    return in;
   }
+
+  p = std::move(poly);
   return in;
 }

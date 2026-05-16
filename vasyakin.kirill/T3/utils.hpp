@@ -55,8 +55,12 @@ namespace vasyakin
   bool vertices_less(const vasyakin::Polygon& lhs, const vasyakin::Polygon& rhs);
 
   bool operator==(const vasyakin::Point& a, const vasyakin::Point& b);
-  bool is_permutation_of(const vasyakin::Polygon& candidate, const vasyakin::Polygon& reference);
+  bool is_permutation_of(const vasyakin::Polygon& candidate,
+    const vasyakin::Polygon& reference);
+
   bool is_rect(const vasyakin::Polygon& candidate);
+  void readPointsRecursive(std::istream& is,
+    std::vector< vasyakin::Point >& points, size_t remaining);
 
   std::istream& operator>>(std::istream& in, DelimeterIO&& dest);
   std::istream& operator>>(std::istream& in, Point& dest);
