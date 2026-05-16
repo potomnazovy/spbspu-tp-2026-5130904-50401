@@ -3,7 +3,7 @@
 #include "commands.hpp"
 #include "cli.hpp"
 
-void readData(std::istream& in, std::vector< vasyakin::Polygon >& all_polygons)
+void vasyakin::readData(std::istream& in, std::vector< vasyakin::Polygon >& all_polygons)
 {
   if (in.eof())
   {
@@ -31,7 +31,7 @@ void readData(std::istream& in, std::vector< vasyakin::Polygon >& all_polygons)
 
 std::vector< vasyakin::Polygon >* vasyakin::command::all_polygons = nullptr;
 
-std::istream& operator>>(std::istream& in, vasyakin::command&)
+std::istream& vasyakin::operator>>(std::istream& in, vasyakin::command&)
 {
   std::string name_command;
   in >> name_command;

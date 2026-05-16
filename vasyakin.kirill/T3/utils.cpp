@@ -130,7 +130,7 @@ bool vasyakin::is_rect(const vasyakin::Polygon& candidate)
     (x30 * x01 + y30 * y01 == 0);
 }
 
-void readPointsRecursive(std::istream& in,
+void vasyakin::readPointsRecursive(std::istream& in,
   std::vector< vasyakin::Point >& points, size_t remaining)
 {
   if (remaining == 0)
@@ -179,7 +179,7 @@ std::istream& vasyakin::operator>>(std::istream& in, Point& dest)
   return in;
 }
 
-std::istream& operator>>(std::istream& in, vasyakin::Polygon& p)
+std::istream& vasyakin::operator>>(std::istream& in, vasyakin::Polygon& p)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
